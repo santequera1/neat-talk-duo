@@ -81,6 +81,7 @@ export function InquiryForm() {
             ))}
           </div>
           <form
+            noValidate
             onSubmit={(event) => {
               event.preventDefault();
               if (step < 3) setStep(step + 1);
@@ -95,7 +96,7 @@ export function InquiryForm() {
               {step === 0 && (
                 <>
                   {select("request", t.request, t.requestOptions)}
-                  {select(
+                  {fields["request"] !== "1" && fields["request"] !== "2" && select(
                     "service",
                     t.service,
                     services.map((service) => service[language]),

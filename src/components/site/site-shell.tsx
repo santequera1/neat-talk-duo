@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu, X, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { copy, paths, type Language } from "@/lib/site-content";
 import logo from "@/assets/jr10-logo.png.asset.json";
+import headerLogo from "@/assets/jr10-horizontal-logo.png.asset.json";
 const LanguageContext = createContext<{
   language: Language;
   setLanguage: (language: Language) => void;
@@ -90,7 +91,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <div className="site">
         <header className="site-header">
           <Link to="/" className="brand" aria-label="Solution d’entretien JR10 — accueil">
-            <img src={logo.url} alt="Solution d’entretien JR10" width="78" height="80" />
+            <img src={headerLogo.url} alt="Solution d’entretien JR10" width="240" height="120" />
           </Link>
           <nav className="desktop-nav" aria-label="Navigation">
             {paths.slice(1).map((path, i) => (
@@ -150,7 +151,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           inert={!open}
         >
           <div className="mobile-menu-top">
-            <img src={logo.url} alt="JR10" width="78" height="80" />
+            <img src={headerLogo.url} alt="Solution d’entretien JR10" width="200" height="100" />
             <Button
               variant="outline"
               size="icon"
