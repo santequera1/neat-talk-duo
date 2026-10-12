@@ -16,7 +16,7 @@ function Contact() {
   return (
     <>
       <PageIntro label={t.contact.toUpperCase()} title={t.contactTitle} text={t.contactIntro} />
-      <section className="container contact-layout">
+      <section className="container contact-layout" id="formulaire">
         <ContactDetails />
         <InquiryForm />
       </section>

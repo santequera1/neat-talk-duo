@@ -720,7 +720,7 @@ a:focus-visible {
 .site-footer {
   background: var(--footer);
   color: var(--primary-foreground);
-  padding: 58px 56px 0;
+  padding: 58px 56px 64px;
 }
 .footer-main {
   width: min(1240px, 100%);
@@ -731,12 +731,8 @@ a:focus-visible {
   padding-bottom: 50px;
 }
 .footer-brand img {
-  width: 90px;
-  height: 92px;
-  object-fit: contain;
-  background: var(--background);
-  border-radius: 4px;
-  padding: 5px;
+  width: 200px;
+  height: auto;
 }
 .footer-brand p {
   color: var(--footer-muted);
@@ -1132,6 +1128,56 @@ a:focus-visible {
 }
 .whatsapp-button:hover {
   background: #178a45;
+}
+.floating-actions {
+  position: fixed;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px oklch(0.25 0.025 248 / 0.18);
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+.floating-actions.is-hidden {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+}
+.floating-lang,
+.floating-quote {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.floating-lang {
+  color: var(--primary);
+  background: transparent;
+}
+.floating-lang:hover {
+  background: var(--secondary);
+}
+.floating-quote {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.floating-quote:hover {
+  background: var(--foreground);
 }
 .home-contact {
   background: var(--secondary);
@@ -1598,8 +1644,8 @@ a:focus-visible {
     gap: 22px;
   }
   .footer-brand img {
-    width: 72px;
-    height: 74px;
+    width: 170px;
+    height: auto;
   }
   .footer-brand p {
     margin: 0;
@@ -1714,6 +1760,21 @@ a:focus-visible {
   }
   .home-contact {
     padding: 60px 0 10px;
+  }
+  .floating-actions {
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin-inline: auto;
+    bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+  .floating-lang,
+  .floating-quote {
+    height: 40px;
+    padding: 0 14px;
+  }
+  .site-footer {
+    padding-bottom: 70px;
   }
   .contact-layout {
     padding: 45px 0 55px;

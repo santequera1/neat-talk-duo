@@ -1,9 +1,17 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowUpRight, Menu, X, MapPin, Phone, Mail } from "lucide-react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from "react";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { ArrowUpRight, Menu, X, MapPin, Phone, Mail, Languages, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { copy, paths, contactEmail, type Language } from "@/lib/site-content";
-import logo from "@/assets/jr10-logo.png";
+import footerLogo from "@/assets/jr10-logo-white.png";
 import headerLogo from "@/assets/jr10-horizontal-logo.png";
 const LanguageContext = createContext<{
   language: Language;
@@ -82,6 +90,18 @@ export function SiteShell({ children }: { children: ReactNode }) {
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
+  const navigate = useNavigate();
+  const formTarget = pathname === "/contact" ? "formulaire" : "soumission";
+  const goToForm = async (event: MouseEvent) => {
+    event.preventDefault();
+    if (!document.getElementById(formTarget)) {
+      await navigate({ to: "/", hash: formTarget });
+    }
+    setTimeout(
+      () => document.getElementById(formTarget)?.scrollIntoView({ behavior: "smooth" }),
+      50,
+    );
+  };
   const closeMenu = () => {
     setOpen(false);
     toggleRef.current?.focus();
@@ -198,11 +218,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="footer-main">
             <div className="footer-brand">
               <img
-                src={logo}
+                src={footerLogo}
                 alt="Solution d’entretien JR10"
                 loading="lazy"
-                width="110"
-                height="112"
+                width="520"
+                height="172"
               />
               <p>{t.footerText}</p>
             </div>
@@ -244,6 +264,26 @@ export function SiteShell({ children }: { children: ReactNode }) {
             </span>
           </div>
         </footer>
+        <div className={`floating-actions ${open ? "is-hidden" : ""}`}>
+          <button
+            type="button"
+            className="floating-lang"
+            onClick={() => setLanguage(language === "fr" ? "en" : "fr")}
+            aria-label={language === "fr" ? "Switch to English" : "Passer en français"}
+          >
+            <Languages size={16} />
+            {language === "fr" ? "EN" : "FR"}
+          </button>
+          <Link
+            to={pathname === "/contact" ? "/contact" : "/"}
+            hash={formTarget}
+            onClick={goToForm}
+            className="floating-quote"
+          >
+            <FileText size={16} />
+            {t.quote}
+          </Link>
+        </div>
       </div>
     </LanguageContext.Provider>
   );
