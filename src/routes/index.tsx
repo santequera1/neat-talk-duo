@@ -1,24 +1,220 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  ArrowUpRight,
+  ArrowDown,
+  MapPin,
+  Leaf,
+  ShieldCheck,
+  HeartHandshake,
+  Sparkles,
+  Building2,
+  Utensils,
+  Store,
+  HardHat,
+  House,
+  ScanLine,
+  Layers,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useLanguage, Reveal, ContactBand } from "@/components/site/site-shell";
+import { pageHead } from "@/lib/site-content";
+import hero from "@/assets/cleaning-hero.jpg";
+import commercial from "@/assets/commercial.jpg";
+import residential from "@/assets/residential.jpg";
 export const Route = createFileRoute("/")({
+  head: () =>
+    pageHead(
+      "Entretien commercial et résidentiel à Drummondville",
+      "Solution d’entretien JR10 : entretien ménager commercial et résidentiel, vitres, tapis et planchers à Drummondville et dans les environs.",
+    ),
   component: Index,
 });
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const sectorIcons = [Building2, Utensils, Store, HardHat, House];
 function Index() {
+  const { t, language } = useLanguage();
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <section className="hero">
+        <img
+          className="hero-image"
+          src={hero}
+          alt={
+            language === "fr"
+              ? "Illustration d’un professionnel de l’entretien dans un bureau lumineux"
+              : "Illustrative image of a cleaning professional in a bright office"
+          }
+          width={1920}
+          height={1088}
+          fetchPriority="high"
+        />
+        <div className="hero-content container">
+          <span className="eyebrow">{t.eyebrow}</span>
+          <h1>
+            {t.hero}
+            <strong>
+              JR10<span className="text-brand-green">.</span>
+            </strong>
+          </h1>
+          <p className="hero-tagline multiline">{t.tagline}</p>
+          <p className="hero-description">{t.intro}</p>
+          <div className="hero-actions">
+            <Button asChild variant="brand">
+              <Link to="/contact">
+                {t.quote}
+                <ArrowUpRight />
+              </Link>
+            </Button>
+            <Button asChild variant="heroOutline">
+              <Link to="/services">
+                {t.discover}
+                <ArrowUpRight />
+              </Link>
+            </Button>
+          </div>
+          <span className="hero-location">
+            <MapPin size={13} />
+            {t.location}
+          </span>
+          <a
+            href="#nos-solutions"
+            className="hero-scroll"
+            aria-label={language === "fr" ? "Découvrir la suite" : "Explore below"}
+          >
+            <span>{language === "fr" ? "DÉFILER POUR DÉCOUVRIR" : "SCROLL TO EXPLORE"}</span>
+            <ArrowDown size={19} />
+          </a>
+        </div>
+      </section>
+      <section className="trust-bar">
+        <div className="container trust-inner">
+          <div className="trust-item">
+            <span className="trust-number">
+              7<span className="text-brand-green">+</span>
+            </span>
+            <p>{t.years}</p>
+          </div>
+          <div className="trust-item">
+            <span className="trust-number">12 000</span>
+            <p>{t.area}</p>
+          </div>
+          <div className="trust-item">
+            <Leaf strokeWidth={1.4} />
+            <p>
+              <span className="trust-local">{t.local}</span>
+              {t.human}
+            </p>
+          </div>
+        </div>
+      </section>
+      <section className="services-section container" id="nos-solutions">
+        <Reveal className="section-heading">
+          <div>
+            <span className="eyebrow">{t.servicesLabel}</span>
+            <h2 className="section-title multiline">{t.servicesTitle}</h2>
+          </div>
+          <div className="section-heading-right">
+            <p>{t.servicesIntro}</p>
+            <Link to="/services" className="text-link">
+              {t.allServices}
+              <ArrowUpRight size={17} />
+            </Link>
+          </div>
+        </Reveal>
+        <div className="service-cards">
+          {[
+            {
+              image: commercial,
+              title: t.commercial,
+              text: t.commercialDesc,
+              tag: language === "fr" ? "POUR VOTRE ENTREPRISE" : "FOR YOUR BUSINESS",
+              hash: "commercial",
+            },
+            {
+              image: residential,
+              title: t.residential,
+              text: t.residentialDesc,
+              tag: language === "fr" ? "POUR VOTRE MAISON" : "FOR YOUR HOME",
+              hash: "residentiel",
+            },
+          ].map((item) => (
+            <Reveal key={item.hash}>
+              <Link to="/services" hash={item.hash} className="service-card">
+                <div className="service-card-image">
+                  <img src={item.image} alt={item.title} loading="lazy" width={1280} height={960} />
+                  <span className="image-label">{item.tag}</span>
+                </div>
+                <div className="service-card-body">
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                  <span className="circle-arrow">
+                    <ArrowUpRight size={20} />
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="specialty-strip">
+          <span>
+            <HardHat size={17} />
+            {language === "fr" ? "Après-construction" : "Post-construction"}
+          </span>
+          <span>
+            <ScanLine size={17} />
+            {language === "fr" ? "Vitres et tapis" : "Windows and carpets"}
+          </span>
+          <span>
+            <Layers size={17} />
+            {language === "fr" ? "Soin des planchers" : "Floor care"}
+          </span>
+          <Link to="/services" className="text-primary">
+            {t.allServices} ↗
+          </Link>
+        </Reveal>
+      </section>
+      <section className="why-section">
+        <Reveal className="container why-grid">
+          <div>
+            <span className="eyebrow">{t.whyLabel}</span>
+            <h2 className="section-title multiline">{t.whyTitle}</h2>
+            <p>{t.whyText}</p>
+            <Link to="/a-propos" className="text-link">
+              {t.aboutLink}
+              <ArrowUpRight size={17} />
+            </Link>
+          </div>
+          <div>
+            {[HeartHandshake, ShieldCheck, Sparkles].map((Icon, i) => (
+              <div className="value-item" key={i}>
+                <span className="value-icon">
+                  <Icon size={22} strokeWidth={1.5} />
+                </span>
+                <div>
+                  <h3>{t.values[i]}</h3>
+                  <p>{t.valueDescriptions[i]}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+      <section className="sectors-section container">
+        <Reveal>
+          <span className="eyebrow">{t.sectorsLabel}</span>
+          <h2 className="section-title">{t.sectorsTitle}</h2>
+          <div className="sector-links">
+            {sectorIcons.map((Icon, i) => (
+              <Link to="/secteurs" key={i} className="sector-link">
+                <Icon />
+                <span>{t.sectors[i]}</span>
+              </Link>
+            ))}
+          </div>
+        </Reveal>
+      </section>
+      <ContactBand />
+    </>
   );
 }
