@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Phone } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Mail, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "./site-shell";
-import { services } from "@/lib/site-content";
+import { services, whatsappNumber, contactEmail } from "@/lib/site-content";
 export function InquiryForm() {
   const { t, language } = useLanguage();
   const [step, setStep] = useState(0);
@@ -11,6 +11,43 @@ export function InquiryForm() {
     province: "Québec",
     country: "Canada",
   });
+  const requestText = () => {
+    const option = (name: string, options: string[]) => options[Number(fields[name])] ?? "";
+    const lines: [string, string][] = [
+      [t.request, fields["request"] ? option("request", t.requestOptions) : ""],
+      [
+        t.service,
+        fields["service"]
+          ? option(
+              "service",
+              services.map((service) => service[language]),
+            )
+          : "",
+      ],
+      [
+        language === "fr" ? "Nom" : "Name",
+        [fields["first"], fields["last"]].filter(Boolean).join(" "),
+      ],
+      [t.company, fields["company"] ?? ""],
+      [t.sqft, fields["sqft"] ?? ""],
+      [t.phoneField, fields["phone"] ?? ""],
+      [t.email, fields["email"] ?? ""],
+      [
+        language === "fr" ? "Adresse" : "Address",
+        ["street", "city", "province", "postal", "country"]
+          .map((name) => fields[name])
+          .filter(Boolean)
+          .join(", "),
+      ],
+      [t.source, fields["source"] ? option("source", t.sources) : ""],
+      [t.notes, fields["notes"] ?? ""],
+    ];
+    return [
+      t.whatsappGreeting,
+      "",
+      ...lines.filter(([, value]) => value.trim()).map(([label, value]) => `• ${label}: ${value}`),
+    ].join("\n");
+  };
   const change = (name: string, value: string) =>
     setFields((previous) => ({ ...previous, [name]: value }));
   const input = (name: string, label: string, type = "text") => (
@@ -51,12 +88,32 @@ export function InquiryForm() {
           </div>
           <h2>{t.formDone}</h2>
           <p>{t.formDoneText}</p>
-          <Button variant="brand" asChild>
-            <a href="tel:+18194617020">
-              <Phone />
-              819 461 7020
-            </a>
-          </Button>
+          <div className="form-result-actions">
+            <Button variant="whatsapp" asChild>
+              <a
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(requestText())}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MessageCircle />
+                {t.whatsapp}
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a
+                href={`mailto:${contactEmail}?subject=${encodeURIComponent(t.emailSubject)}&body=${encodeURIComponent(requestText())}`}
+              >
+                <Mail />
+                {t.sendEmail}
+              </a>
+            </Button>
+            <Button variant="outline" asChild>
+              <a href="tel:+18194617020">
+                <Phone />
+                819 461 7020
+              </a>
+            </Button>
+          </div>
           <Button
             variant="link"
             onClick={() => {
@@ -96,11 +153,13 @@ export function InquiryForm() {
               {step === 0 && (
                 <>
                   {select("request", t.request, t.requestOptions)}
-                  {fields["request"] !== "1" && fields["request"] !== "2" && select(
-                    "service",
-                    t.service,
-                    services.map((service) => service[language]),
-                  )}
+                  {fields["request"] !== "1" &&
+                    fields["request"] !== "2" &&
+                    select(
+                      "service",
+                      t.service,
+                      services.map((service) => service[language]),
+                    )}
                 </>
               )}
               {step === 1 && (

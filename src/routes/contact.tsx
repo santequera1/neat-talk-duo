@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { pageHead } from "@/lib/site-content";
-import { useLanguage, PageIntro, Reveal } from "@/components/site/site-shell";
+import { useLanguage, PageIntro, Reveal, ContactDetails } from "@/components/site/site-shell";
 import { InquiryForm } from "@/components/site/inquiry-form";
 export const Route = createFileRoute("/contact")({
   head: () =>
@@ -17,26 +17,7 @@ function Contact() {
     <>
       <PageIntro label={t.contact.toUpperCase()} title={t.contactTitle} text={t.contactIntro} />
       <section className="container contact-layout">
-        <div className="contact-details">
-          <div>
-            <h2>{t.phone}</h2>
-            <a href="tel:+18194617020">819 461 7020</a>
-          </div>
-          <div>
-            <h2>{t.address}</h2>
-            <p>
-              426 rue Cormier
-              <br />
-              Drummondville, QC
-              <br />
-              J2C 7L9, Canada
-            </p>
-          </div>
-          <p className="contact-location">
-            <MapPin size={18} />
-            {t.location}
-          </p>
-        </div>
+        <ContactDetails />
         <InquiryForm />
       </section>
       <section className="faq-section">

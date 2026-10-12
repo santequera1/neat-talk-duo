@@ -12,6 +12,7 @@ const buttonVariants = cva(
         brand: "brand-button",
         light: "light-button",
         heroOutline: "hero-outline-button",
+        whatsapp: "brand-button whatsapp-button",
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:

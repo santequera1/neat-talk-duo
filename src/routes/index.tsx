@@ -16,7 +16,8 @@ import {
   Layers,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage, Reveal, ContactBand } from "@/components/site/site-shell";
+import { useLanguage, Reveal, ContactDetails } from "@/components/site/site-shell";
+import { InquiryForm } from "@/components/site/inquiry-form";
 import { pageHead } from "@/lib/site-content";
 import hero from "@/assets/cleaning-hero.jpg";
 import commercial from "@/assets/commercial.jpg";
@@ -59,10 +60,10 @@ function Index() {
           <p className="hero-description">{t.intro}</p>
           <div className="hero-actions">
             <Button asChild variant="brand">
-              <Link to="/contact">
+              <a href="#soumission">
                 {t.quote}
                 <ArrowUpRight />
-              </Link>
+              </a>
             </Button>
             <Button asChild variant="heroOutline">
               <Link to="/services">
@@ -214,7 +215,23 @@ function Index() {
           </div>
         </Reveal>
       </section>
-      <ContactBand />
+      <section className="home-contact" id="soumission">
+        <div className="container">
+          <Reveal className="section-heading">
+            <div>
+              <span className="eyebrow">{t.homeContactLabel}</span>
+              <h2 className="section-title multiline">{t.contactTitle}</h2>
+            </div>
+            <div className="section-heading-right">
+              <p>{t.contactIntro}</p>
+            </div>
+          </Reveal>
+          <div className="contact-layout">
+            <ContactDetails />
+            <InquiryForm />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

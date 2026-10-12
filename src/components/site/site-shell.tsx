@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ArrowUpRight, Menu, X, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Menu, X, MapPin, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { copy, paths, type Language } from "@/lib/site-content";
-import logo from "@/assets/jr10-logo.png.asset.json";
-import headerLogo from "@/assets/jr10-horizontal-logo.png.asset.json";
+import { copy, paths, contactEmail, type Language } from "@/lib/site-content";
+import logo from "@/assets/jr10-logo.png";
+import headerLogo from "@/assets/jr10-horizontal-logo.png";
 const LanguageContext = createContext<{
   language: Language;
   setLanguage: (language: Language) => void;
@@ -91,7 +91,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <div className="site">
         <header className="site-header">
           <Link to="/" className="brand" aria-label="Solution d’entretien JR10 — accueil">
-            <img src={headerLogo.url} alt="Solution d’entretien JR10" width="240" height="120" />
+            <img src={headerLogo} alt="Solution d’entretien JR10" width="240" height="120" />
           </Link>
           <nav className="desktop-nav" aria-label="Navigation">
             {paths.slice(1).map((path, i) => (
@@ -151,7 +151,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           inert={!open}
         >
           <div className="mobile-menu-top">
-            <img src={headerLogo.url} alt="Solution d’entretien JR10" width="200" height="100" />
+            <img src={headerLogo} alt="Solution d’entretien JR10" width="200" height="100" />
             <Button
               variant="outline"
               size="icon"
@@ -173,6 +173,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="mobile-menu-bottom">
             <p>{t.location}</p>
             <a href="tel:+18194617020">819 461 7020</a>
+            <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
             <div className="language-switch">
               <Button
                 variant="ghost"
@@ -197,7 +198,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="footer-main">
             <div className="footer-brand">
               <img
-                src={logo.url}
+                src={logo}
                 alt="Solution d’entretien JR10"
                 loading="lazy"
                 width="110"
@@ -218,6 +219,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <a href="tel:+18194617020">
                 <Phone size={16} />
                 819 461 7020
+              </a>
+              <a href={`mailto:${contactEmail}`}>
+                <Mail size={16} />
+                {contactEmail}
               </a>
               <p>
                 <MapPin size={16} />
@@ -260,6 +265,37 @@ export function ContactBand() {
         </Button>
       </Reveal>
     </section>
+  );
+}
+export function ContactDetails() {
+  const { t } = useLanguage();
+  return (
+    <div className="contact-details">
+      <div>
+        <h2>{t.phone}</h2>
+        <a href="tel:+18194617020">819 461 7020</a>
+      </div>
+      <div>
+        <h2>{t.emailLabel}</h2>
+        <a href={`mailto:${contactEmail}`} className="contact-email">
+          {contactEmail}
+        </a>
+      </div>
+      <div>
+        <h2>{t.address}</h2>
+        <p>
+          426 rue Cormier
+          <br />
+          Drummondville, QC
+          <br />
+          J2C 7L9, Canada
+        </p>
+      </div>
+      <p className="contact-location">
+        <MapPin size={18} />
+        {t.location}
+      </p>
+    </div>
   );
 }
 export function PageIntro({ label, title, text }: { label: string; title: string; text: string }) {

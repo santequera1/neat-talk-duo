@@ -330,6 +330,10 @@ a:focus-visible {
   font-size: 23px;
   margin-block: 10px;
 }
+.mobile-menu-bottom > a[href^="mailto:"] {
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
 .hero {
   position: relative;
   min-height: 630px;
@@ -965,6 +969,10 @@ a:focus-visible {
 .contact-details p {
   font-size: 14px;
 }
+.contact-details .contact-email {
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
 .contact-details .contact-location {
   display: flex;
   gap: 10px;
@@ -1104,6 +1112,39 @@ a:focus-visible {
   font-size: 14px;
   color: var(--muted-foreground);
   margin-bottom: 25px;
+}
+.form-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.form-result-actions a {
+  height: 48px;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+.whatsapp-button {
+  background: #1fa855;
+  color: #fff;
+}
+.whatsapp-button:hover {
+  background: #178a45;
+}
+.home-contact {
+  background: var(--secondary);
+  padding: 90px 0 20px;
+}
+.home-contact .section-heading {
+  margin-bottom: 0;
+}
+.home-contact .inquiry-form {
+  background: var(--background);
+}
+.home-contact .form-progress {
+  border-bottom: 1px solid var(--border);
 }
 .faq-section {
   background: var(--secondary);
@@ -1671,6 +1712,9 @@ a:focus-visible {
   .sector-detail p {
     font-size: 13px;
   }
+  .home-contact {
+    padding: 60px 0 10px;
+  }
   .contact-layout {
     padding: 45px 0 55px;
     gap: 35px;
@@ -1742,6 +1786,9 @@ a:focus-visible {
   }
   .mobile-menu-bottom > a {
     font-size: 22px;
+  }
+  .mobile-menu-bottom > a[href^="mailto:"] {
+    font-size: 15px;
   }
 }
 @media (max-height: 650px) and (max-width: 900px) {

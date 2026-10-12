@@ -72,6 +72,7 @@ export const copy = {
     contactIntro:
       "Dites-nous ce dont vous avez besoin. Ensemble, trouvons la solution qui vous convient.",
     phone: "Appelez-nous",
+    emailLabel: "Écrivez-nous",
     address: "Notre adresse",
     faq: "Vos questions, nos réponses.",
     steps: ["Votre besoin", "Vos coordonnées", "Votre adresse", "Les derniers détails"],
@@ -110,10 +111,15 @@ export const copy = {
     notes: "Parlez-nous de votre projet",
     submit: "Terminer la demande",
     formNotice:
-      "Ce formulaire n’est pas encore connecté. Aucune demande ni donnée ne sera envoyée.",
+      "À la fin, votre demande sera préparée pour être envoyée par WhatsApp ou par courriel. Aucune donnée n’est enregistrée sur ce site.",
     formDone: "Votre demande est prête.",
     formDoneText:
-      "L’envoi en ligne n’est pas encore disponible. Pour transmettre votre demande, appelez-nous au 819 461 7020.",
+      "Envoyez-la-nous par WhatsApp ou par courriel en un clic, ou appelez-nous au 819 461 7020.",
+    whatsapp: "Envoyer par WhatsApp",
+    sendEmail: "Envoyer par courriel",
+    emailSubject: "Demande de soumission – site web",
+    whatsappGreeting: "Bonjour JR10, voici ma demande de soumission :",
+    homeContactLabel: "DEMANDE DE SOUMISSION",
     restart: "Nouvelle demande",
     selected: "Choisir une option",
     sectorIntro:
@@ -205,6 +211,7 @@ export const copy = {
     contactTitle: "It all starts\nwith a conversation.",
     contactIntro: "Tell us what you need. Together, we’ll find the right solution for you.",
     phone: "Call us",
+    emailLabel: "Email us",
     address: "Our address",
     faq: "Your questions, answered.",
     steps: ["Your needs", "Your details", "Your address", "Final details"],
@@ -238,10 +245,16 @@ export const copy = {
     ],
     notes: "Tell us about your project",
     submit: "Complete inquiry",
-    formNotice: "This form is not connected yet. No inquiry or personal data will be sent.",
+    formNotice:
+      "At the end, your inquiry will be prepared to send via WhatsApp or email. No data is stored on this site.",
     formDone: "Your inquiry is ready.",
     formDoneText:
-      "Online submission is not available yet. To share your inquiry, please call us at 819 461 7020.",
+      "Send it to us on WhatsApp or by email in one click, or call us at 819 461 7020.",
+    whatsapp: "Send via WhatsApp",
+    sendEmail: "Send by email",
+    emailSubject: "Quote request – website",
+    whatsappGreeting: "Hello JR10, here is my quote request:",
+    homeContactLabel: "REQUEST A QUOTE",
     restart: "New inquiry",
     selected: "Choose an option",
     sectorIntro:
@@ -385,6 +398,8 @@ export const services = [
     ],
   },
 ];
+export const whatsappNumber = "18194617020";
+export const contactEmail = "info@solutionentretienjr10.ca";
 export const paths = ["/", "/services", "/secteurs", "/a-propos", "/contact"] as const;
 export function pageHead(title: string, description: string) {
   return {
