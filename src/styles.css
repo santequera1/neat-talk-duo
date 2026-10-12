@@ -168,10 +168,10 @@ a:focus-visible {
 .site-header {
   height: 104px;
   display: grid;
-  grid-template-columns: minmax(90px, 1fr) auto minmax(280px, 1fr);
-  gap: 35px;
+  grid-template-columns: minmax(200px, 1fr) auto auto;
+  gap: 24px;
   align-items: center;
-  padding: 0 56px;
+  padding: 0 32px;
   background: var(--background);
   position: sticky;
   top: 0;
@@ -179,17 +179,18 @@ a:focus-visible {
   border-bottom: 1px solid var(--border);
 }
 .brand {
-  width: 73px;
+  width: 240px;
+  max-width: 100%;
   display: block;
 }
 .brand img {
-  width: 73px;
-  height: 76px;
+  width: 100%;
+  height: 90px;
   object-fit: contain;
 }
 .desktop-nav {
   display: flex;
-  gap: 30px;
+  gap: 24px;
   align-items: center;
 }
 .desktop-nav a {
@@ -270,8 +271,8 @@ a:focus-visible {
   justify-content: space-between;
 }
 .mobile-menu-top img {
-  width: 72px;
-  height: 74px;
+  width: 200px;
+  height: 90px;
   object-fit: contain;
 }
 .mobile-menu nav {
@@ -1193,7 +1194,7 @@ a:focus-visible {
   .site-header {
     padding-inline: 32px;
     gap: 20px;
-    grid-template-columns: 90px auto 1fr;
+    grid-template-columns: 200px auto 1fr;
   }
   .desktop-nav {
     gap: 20px;
@@ -1248,8 +1249,8 @@ a:focus-visible {
     padding-inline: 28px;
   }
   .brand img {
-    width: 62px;
-    height: 64px;
+    width: 100%;
+    height: 80px;
   }
   .header-actions {
     gap: 18px;
@@ -1350,11 +1351,11 @@ a:focus-visible {
     padding-inline: 22px;
   }
   .brand {
-    width: 59px;
+    width: 180px;
   }
   .brand img {
-    width: 59px;
-    height: 61px;
+    width: 100%;
+    height: 76px;
   }
   .hero {
     min-height: 610px;
@@ -1756,7 +1757,7 @@ a:focus-visible {
   }
   .mobile-menu-top img {
     height: 55px;
-    width: 53px;
+    width: 180px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
