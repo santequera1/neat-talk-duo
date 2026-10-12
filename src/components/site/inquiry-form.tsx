@@ -96,7 +96,7 @@ export function InquiryForm() {
               {step === 0 && (
                 <>
                   {select("request", t.request, t.requestOptions)}
-                  {fields.request !== "1" && fields.request !== "2" && select(
+                  {fields["request"] !== "1" && fields["request"] !== "2" && select(
                     "service",
                     t.service,
                     services.map((service) => service[language]),
