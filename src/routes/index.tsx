@@ -14,6 +14,8 @@ import {
   House,
   ScanLine,
   Layers,
+  Grid3x3,
+  Sofa,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage, Reveal, ContactDetails } from "@/components/site/site-shell";
@@ -129,6 +131,7 @@ function Index() {
               text: t.commercialDesc,
               tag: language === "fr" ? "POUR VOTRE ENTREPRISE" : "FOR YOUR BUSINESS",
               hash: "commercial",
+              slug: "entretien-commercial",
             },
             {
               image: residential,
@@ -136,10 +139,11 @@ function Index() {
               text: t.residentialDesc,
               tag: language === "fr" ? "POUR VOTRE MAISON" : "FOR YOUR HOME",
               hash: "residentiel",
+              slug: "grand-menage",
             },
           ].map((item) => (
             <Reveal key={item.hash}>
-              <Link to="/services" hash={item.hash} className="service-card">
+              <Link to="/services/$slug" params={{ slug: item.slug }} className="service-card">
                 <div className="service-card-image">
                   <img src={item.image} alt={item.title} loading="lazy" width={1280} height={960} />
                   <span className="image-label">{item.tag}</span>
@@ -158,18 +162,20 @@ function Index() {
           ))}
         </div>
         <Reveal className="specialty-strip">
-          <span>
-            <HardHat size={17} />
-            {language === "fr" ? "Après-construction" : "Post-construction"}
-          </span>
-          <span>
-            <ScanLine size={17} />
-            {language === "fr" ? "Vitres et tapis" : "Windows and carpets"}
-          </span>
-          <span>
-            <Layers size={17} />
-            {language === "fr" ? "Soin des planchers" : "Floor care"}
-          </span>
+          {(
+            [
+              [HardHat, "apres-construction", "Après-construction", "Post-construction"],
+              [ScanLine, "vitres", "Vitres", "Windows"],
+              [Grid3x3, "tapis-carpettes", "Tapis et carpettes", "Carpets and rugs"],
+              [Sofa, "tissus-ameublement", "Tissus d’ameublement", "Upholstery"],
+              [Layers, "planchers", "Soin des planchers", "Floor care"],
+            ] as const
+          ).map(([Icon, slug, fr, en]) => (
+            <Link key={slug} to="/services/$slug" params={{ slug }}>
+              <Icon size={17} />
+              {language === "fr" ? fr : en}
+            </Link>
+          ))}
           <Link to="/services" className="text-primary">
             {t.allServices} ↗
           </Link>

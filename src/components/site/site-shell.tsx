@@ -115,7 +115,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </Link>
           <nav className="desktop-nav" aria-label="Navigation">
             {paths.slice(1).map((path, i) => (
-              <Link key={path} to={path} className={pathname === path ? "active" : ""}>
+              <Link
+                key={path}
+                to={path}
+                className={pathname === path || pathname.startsWith(`${path}/`) ? "active" : ""}
+              >
                 {t.nav[i + 1]}
               </Link>
             ))}

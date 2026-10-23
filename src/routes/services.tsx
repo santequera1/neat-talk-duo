@@ -18,18 +18,21 @@ function Services() {
       <section className="service-list container">
         {services.map((service, i) => (
           <Reveal key={i}>
-            <article
-              className="service-detail"
-              id={i === 0 ? "commercial" : i === 6 ? "residentiel" : `service-${i}`}
-            >
+            <article className="service-detail" id={service.id}>
               <span className="service-index">0{i + 1}</span>
               <div>
                 <h2>{service[language]}</h2>
                 <p>{language === "fr" ? service.frDesc : service.enDesc}</p>
-                <Link to="/contact" className="text-link">
-                  {t.quote}
-                  <ArrowUpRight size={16} />
-                </Link>
+                <div className="service-links">
+                  <Link to="/services/$slug" params={{ slug: service.slug }} className="text-link">
+                    {t.learn}
+                    <ArrowUpRight size={16} />
+                  </Link>
+                  <Link to="/" hash="soumission" className="text-link text-link-muted">
+                    {t.quote}
+                    <ArrowUpRight size={16} />
+                  </Link>
+                </div>
               </div>
               <ul>
                 {(language === "fr" ? service.frItems : service.enItems).map((item) => (
