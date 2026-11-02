@@ -1,17 +1,21 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Check, Mail, MessageCircle, Phone } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, MessageCircle, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "./site-shell";
-import { services, whatsappNumber, contactEmail } from "@/lib/site-content";
+import { services, whatsappNumber } from "@/lib/site-content";
+import { sendInquiry } from "@/lib/send-inquiry";
 export function InquiryForm() {
   const { t, language } = useLanguage();
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
+  const [contactError, setContactError] = useState(false);
   const [fields, setFields] = useState<Record<string, string>>({
     province: "Québec",
     country: "Canada",
   });
-  const requestText = () => {
+  const requestLines = () => {
     const option = (name: string, options: string[]) => options[Number(fields[name])] ?? "";
     const lines: [string, string][] = [
       [t.request, fields["request"] ? option("request", t.requestOptions) : ""],
@@ -42,11 +46,33 @@ export function InquiryForm() {
       [t.source, fields["source"] ? option("source", t.sources) : ""],
       [t.notes, fields["notes"] ?? ""],
     ];
-    return [
+    return lines.filter(([, value]) => value.trim());
+  };
+  const requestText = () =>
+    [
       t.whatsappGreeting,
       "",
-      ...lines.filter(([, value]) => value.trim()).map(([label, value]) => `• ${label}: ${value}`),
+      ...requestLines().map(([label, value]) => `• ${label}: ${value}`),
     ].join("\n");
+  const submit = async () => {
+    setSending(true);
+    let ok = false;
+    try {
+      const result = await sendInquiry({
+        data: {
+          lines: requestLines(),
+          name: [fields["first"], fields["last"]].filter(Boolean).join(" "),
+          replyTo: fields["email"] ?? "",
+          website: fields["website"] ?? "",
+        },
+      });
+      ok = result.ok;
+    } catch {
+      ok = false;
+    }
+    setEmailSent(ok);
+    setSending(false);
+    setDone(true);
   };
   const change = (name: string, value: string) =>
     setFields((previous) => ({ ...previous, [name]: value }));
@@ -86,8 +112,8 @@ export function InquiryForm() {
           <div className="result-icon">
             <Check />
           </div>
-          <h2>{t.formDone}</h2>
-          <p>{t.formDoneText}</p>
+          <h2>{emailSent ? t.formSent : t.formDone}</h2>
+          <p>{emailSent ? t.formSentText : t.formDoneText}</p>
           <div className="form-result-actions">
             <Button variant="whatsapp" asChild>
               <a
@@ -97,14 +123,6 @@ export function InquiryForm() {
               >
                 <MessageCircle />
                 {t.whatsapp}
-              </a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a
-                href={`mailto:${contactEmail}?subject=${encodeURIComponent(t.emailSubject)}&body=${encodeURIComponent(requestText())}`}
-              >
-                <Mail />
-                {t.sendEmail}
               </a>
             </Button>
             <Button variant="outline" asChild>
@@ -118,6 +136,7 @@ export function InquiryForm() {
             variant="link"
             onClick={() => {
               setDone(false);
+              setEmailSent(false);
               setStep(0);
               setFields({ province: "Québec", country: "Canada" });
             }}
@@ -141,8 +160,14 @@ export function InquiryForm() {
             noValidate
             onSubmit={(event) => {
               event.preventDefault();
+              if (sending) return;
+              if (step === 1 && !fields["phone"]?.trim() && !fields["email"]?.trim()) {
+                setContactError(true);
+                return;
+              }
+              setContactError(false);
               if (step < 3) setStep(step + 1);
-              else setDone(true);
+              else void submit();
             }}
           >
             <span className="eyebrow">
@@ -170,6 +195,11 @@ export function InquiryForm() {
                   {input("sqft", t.sqft, "number")}
                   {input("phone", t.phoneField, "tel")}
                   {input("email", t.email, "email")}
+                  {contactError && (
+                    <p className="field-error field-wide" role="alert">
+                      {t.contactRequired}
+                    </p>
+                  )}
                 </>
               )}
               {step === 2 && (
@@ -196,6 +226,16 @@ export function InquiryForm() {
                 </>
               )}
             </div>
+            <label className="form-honeypot" aria-hidden="true">
+              Website
+              <input
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={fields["website"] ?? ""}
+                onChange={(event) => change("website", event.target.value)}
+              />
+            </label>
             <div className="form-actions">
               {step > 0 ? (
                 <Button type="button" variant="ghost" onClick={() => setStep(step - 1)}>
@@ -205,8 +245,8 @@ export function InquiryForm() {
               ) : (
                 <span />
               )}
-              <Button variant="brand" type="submit">
-                {step === 3 ? t.submit : t.next}
+              <Button variant="brand" type="submit" disabled={sending}>
+                {sending ? t.sending : step === 3 ? t.submit : t.next}
                 <ArrowRight />
               </Button>
             </div>

@@ -111,10 +111,16 @@ export const copy = {
     notes: "Parlez-nous de votre projet",
     submit: "Terminer la demande",
     formNotice:
-      "À la fin, votre demande sera préparée pour être envoyée par WhatsApp ou par courriel. Aucune donnée n’est enregistrée sur ce site.",
+      "En terminant, votre demande nous est transmise par courriel. Vous pourrez aussi nous l’envoyer par WhatsApp.",
     formDone: "Votre demande est prête.",
     formDoneText:
-      "Envoyez-la-nous par WhatsApp ou par courriel en un clic, ou appelez-nous au 819 461 7020.",
+      "L’envoi automatique n’a pas fonctionné. Envoyez-nous votre demande par WhatsApp en un clic, ou appelez-nous au 819 461 7020.",
+    formSent: "Merci, votre demande a été envoyée.",
+    formSentText:
+      "Nous vous contacterons rapidement. Pour une réponse plus rapide, écrivez-nous aussi sur WhatsApp.",
+    sending: "Envoi en cours…",
+    contactRequired:
+      "Indiquez au moins un téléphone ou une adresse courriel pour que nous puissions vous joindre.",
     whatsapp: "Envoyer par WhatsApp",
     sendEmail: "Envoyer par courriel",
     emailSubject: "Demande de soumission – site web",
@@ -219,7 +225,11 @@ export const copy = {
     prev: "Previous",
     service: "Service required",
     request: "Inquiry type",
-    requestOptions: ["Commercial inquiries", "Supplier and subcontractor inquiries", "General information"],
+    requestOptions: [
+      "Commercial inquiries",
+      "Supplier and subcontractor inquiries",
+      "General information",
+    ],
     first: "First name",
     last: "Last name",
     company: "Company name",
@@ -246,10 +256,15 @@ export const copy = {
     notes: "Tell us about your project",
     submit: "Complete inquiry",
     formNotice:
-      "At the end, your inquiry will be prepared to send via WhatsApp or email. No data is stored on this site.",
+      "When you finish, your inquiry is sent to us by email. You can also send it to us on WhatsApp.",
     formDone: "Your inquiry is ready.",
     formDoneText:
-      "Send it to us on WhatsApp or by email in one click, or call us at 819 461 7020.",
+      "Automatic sending didn’t work. Send us your inquiry on WhatsApp in one click, or call us at 819 461 7020.",
+    formSent: "Thank you, your inquiry has been sent.",
+    formSentText: "We will contact you shortly. For a faster reply, message us on WhatsApp too.",
+    sending: "Sending…",
+    contactRequired:
+      "Please provide at least a phone number or an email address so we can reach you.",
     whatsapp: "Send via WhatsApp",
     sendEmail: "Send by email",
     emailSubject: "Quote request – website",

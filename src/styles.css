@@ -1281,6 +1281,18 @@ a:focus-visible {
   color: var(--muted-foreground);
   margin-bottom: 25px;
 }
+.field-error {
+  font-size: 12px;
+  color: oklch(0.55 0.2 27);
+  margin: 0;
+}
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 .form-result-actions {
   display: flex;
   flex-wrap: wrap;
